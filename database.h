@@ -5,6 +5,7 @@
 #include <set>
 #include <iostream>
 #include <vector>
+#include <list>
 #include <utility>
 #include "date.h"
 #include "node.h"
@@ -14,7 +15,7 @@ using namespace std;
 class Database
 {
 private:
-  map<Date, set<string> > dataBaseStorage;
+  map<Date, list<string> > dataBaseStorage;
 public:
     Database();
     void Add(const Date& date, const string& new_event);
@@ -24,7 +25,7 @@ public:
     void Print(ostream& outStream) const;
     template<typename Func> int RemoveIf(Func f){}
     template<typename Func> vector<string> FindIf(Func f){}
-    string& Last(const Date& date) const;
+    string Last(const Date& date) const;
 };
 
 #endif // DATEBASE_H
