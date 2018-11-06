@@ -25,7 +25,7 @@ public:
     void Print(ostream& outStream) const;
     template<typename Func> int RemoveIf(Func f){}
     template<typename Func> vector<string> FindIf(Func f){}
-    string Last(const Date& date) const;
+    string Last(const Date& date) ;
 };
 
 #endif // DATEBASE_H

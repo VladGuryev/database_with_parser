@@ -10,6 +10,9 @@ Date ParseDate(istream &is)
     vector<string> v_s;
     string el, p;
 
+    if(str.empty())
+        return {};
+
     while(i < str.size()){
         el.push_back(str[i]);
         if (el.compare(string("-"))  != 0){
@@ -70,4 +73,15 @@ bool operator<(const Date& lhs, const Date& rhs){
     }
 }
 
+bool operator==(const Date& lhs, const Date& rhs){
+    return (!(lhs < rhs) && !(rhs < lhs));
+}
 
+bool operator!=(const Date& lhs, const Date& rhs){
+    return !(lhs == rhs);
+}
+
+Date::~Date()
+{
+
+}
