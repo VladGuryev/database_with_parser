@@ -48,17 +48,11 @@ string Database::Last(const Date &date)
          return "No entries";
      }
 
-     if(events == begin(dataBaseStorage)){
-        return events->second.back();
+     if((date == events->first) || (events == begin(dataBaseStorage))){
+        return string(events->first) + " " + events->second.back();
      }
-     else if(events == end(dataBaseStorage)){
-        return prev(events)->second.back();
-     } else {
-         if(date == events->first){
-            return events->second.back();
-         } else {
-            return prev(events)->second.back();
-         }
+     else {
+        return string(prev(events)->first) + " " + prev(events)->second.back();
      }
 }
 

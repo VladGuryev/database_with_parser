@@ -30,30 +30,12 @@ Date ParseDate(istream &is)
     int year = stoi(v_s.at(0));
     int month = stoi(v_s.at(1));
     int day = stoi(v_s.at(2));
-    //cout << "year: " << year << "month: "<< month<< "day: "<< day;
     Date date(year, month, day);
     return date;
 }
 
 ostream& operator<<(ostream& os, const Date& dt){
-    auto addenda = [](string& str, int index = 1){
-        if(index == 0){
-            while(str.size() < 4){
-                str.insert (str.begin(), '0');
-            }
-        } else {
-            while(str.size() < 2){
-                str.insert (str.begin(), '0');
-            }
-        }
-    };
-    string year = std::to_string(dt.GetYear());
-    addenda(year, 0);
-    string month = std::to_string(dt.GetMonth());
-    addenda(month);
-    string day= std::to_string(dt.GetDay());
-    addenda(day);
-    os <<  year << '-' << month << '-' << day;
+    os <<  dt.toString();
     return os;
 }
 
@@ -85,3 +67,36 @@ Date::~Date()
 {
 
 }
+
+string Date::toString() const
+{
+    auto addenda = [](string& str, int index = 1){
+        if(index == 0){
+            while(str.size() < 4){
+                str.insert (str.begin(), '0');
+            }
+        } else {
+            while(str.size() < 2){
+                str.insert (str.begin(), '0');
+            }
+        }
+    };
+    string year = std::to_string(this->GetYear());
+    addenda(year, 0);
+    string month = std::to_string(this->GetMonth());
+    addenda(month);
+    string day= std::to_string(this->GetDay());
+    addenda(day);
+    string out = year + "-" + month + "-" + day;
+    return out;
+}
+
+Date::operator string() const
+{
+    return this->toString();
+}
+
+
+
+
+

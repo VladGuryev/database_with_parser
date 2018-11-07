@@ -22,6 +22,8 @@ public:
     friend bool operator<(const Date& lhs, const Date& rhs);
     friend bool operator==(const Date& lhs, const Date& rhs);
     friend bool operator!=(const Date& lhs, const Date& rhs);
+    explicit operator string() const;
+    string toString() const;
 };
 
 Date ParseDate(istream &is);

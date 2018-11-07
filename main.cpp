@@ -63,11 +63,12 @@ int main() {
       }
     } else if (command.empty()) {
       continue;
+    } else if (command == "Exit") {
+        return 0;
     } else {
-      throw logic_error("Unknown command: " + command);
+        throw logic_error("Unknown command: " + command);
     }
   }
-
   return 0;
 }
 
