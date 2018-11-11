@@ -7,8 +7,11 @@
 class LogicalOperationNode : public Node
 {
 public:
-    LogicalOperationNode(LogicalOperation, shared_ptr<Node> node1,
-                         shared_ptr<Node>node2);
+    LogicalOperation op_;
+    shared_ptr<Node> left_, right_;
+    LogicalOperationNode(LogicalOperation op, shared_ptr<Node> left,
+                         shared_ptr<Node> right);
+    bool Evaluate(const Date& date, const string& event) override;
 };
 
 #endif // LOGICALOPERATIONNODE_H

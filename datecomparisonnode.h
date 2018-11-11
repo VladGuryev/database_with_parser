@@ -6,8 +6,11 @@
 
 class DateComparisonNode: public Node
 {
+    Date date_;
+    Comparison cmp_;
 public:
     DateComparisonNode(Comparison cmp, Date date);
+    bool Evaluate(const Date& date, const string& event) override;
 };
 
 #endif // DATECOMPARISONNODE_H

@@ -2,6 +2,8 @@
 #include <iomanip>
 #include <vector>
 
+Date::Date(int y, int m, int d): year(y), month(m), day(d) { }
+
 Date ParseDate(istream &is)
 {
     string str;
@@ -55,6 +57,10 @@ bool operator<(const Date& lhs, const Date& rhs){
     }
 }
 
+bool operator>(const Date& lhs, const Date& rhs){
+    return (rhs < lhs);
+}
+
 bool operator==(const Date& lhs, const Date& rhs){
     return (!(lhs < rhs) && !(rhs < lhs));
 }
@@ -63,10 +69,6 @@ bool operator!=(const Date& lhs, const Date& rhs){
     return !(lhs == rhs);
 }
 
-Date::~Date()
-{
-
-}
 
 string Date::toString() const
 {

@@ -7,6 +7,8 @@
 #include <vector>
 #include <list>
 #include <utility>
+#include <algorithm>
+#include <functional>
 #include "date.h"
 #include "node.h"
 using namespace std;
@@ -15,7 +17,9 @@ using namespace std;
 class Database
 {
 private:
-  map<Date, list<string> > dataBaseStorage;
+    typedef list<string> eventsOnDate;
+    map<Date, list<string> > dataBaseStorage;
+
 public:
     Database();
     void Add(const Date& date, const string& new_event);
@@ -23,10 +27,13 @@ public:
     unsigned int  DeleteDate(const Date& date);
     set<string> Find(const Date& date) const;
     void Print(ostream& outStream) const;
-    template<typename Func> int RemoveIf(Func f){}
-    template<typename Func> vector<string> FindIf(Func f){}
-    string Last(const Date& date) ;
+    int RemoveIf(function<bool (const Date&, const string&)> predicat);
+    vector<string> FindIf(function<bool (const Date &, const string &)> predicat);
+    string Last(const Date& date);
 };
+
+
+
 
 #endif // DATEBASE_H
 

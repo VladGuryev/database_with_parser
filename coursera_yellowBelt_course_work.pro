@@ -9,7 +9,6 @@ SOURCES += \
     condition_parser.cpp \
     token.cpp \
     date.cpp \
-    node.cpp \
     database.cpp \
     datecomparisonnode.cpp \
     eventcomparisonnode.cpp \

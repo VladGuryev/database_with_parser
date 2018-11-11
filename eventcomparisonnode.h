@@ -5,8 +5,11 @@
 
 class EventComparisonNode : public Node
 {
+    string str_;
+    Comparison cmp_;
 public:
     EventComparisonNode(Comparison cmp, string str);
+    bool Evaluate(const Date& date, const string& event) override;
 };
 
 #endif // EVENTCOMPARISONNODE_H

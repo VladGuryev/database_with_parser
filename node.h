@@ -8,8 +8,9 @@ using namespace  std;
 class Node
 {
 public:
-    Node();
-    bool Evaluate(const Date& date, const string& event);
+    Node(){}
+    virtual ~Node(){}
+    virtual bool Evaluate(const Date& date, const string& event) = 0;
 };
 
 #endif // NODE_H

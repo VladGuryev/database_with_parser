@@ -13,9 +13,13 @@
 using namespace std;
 
 string ParseEvent(istream& is) {
-  string p;
-  getline(is, p);
-  return p;
+  string stripString;
+  getline(is, stripString);
+
+  while(!stripString.empty() && isspace(*stripString.begin()))
+      stripString.erase(stripString.begin());
+
+  return stripString;
 }
 
 void TestAll();
@@ -49,7 +53,6 @@ int main() {
       auto predicate = [condition](const Date& date, const string& event) {
         return condition->Evaluate(date, event);
       };
-
       const auto entries = db.FindIf(predicate);
       for (const auto& entry : entries) {
         cout << entry << endl;
@@ -73,10 +76,18 @@ int main() {
 }
 
 void TestParseEvent() {
-  {
+{
     istringstream is("event");
     AssertEqual(ParseEvent(is), "event", "Parse event without leading spaces");
-  }
+}
+{
+    istringstream is("sport event");
+    AssertEqual(ParseEvent(is), "sport event", "Parse event with 2 words");
+}
+{
+    istringstream is("sport event\n");
+    AssertEqual(ParseEvent(is), "sport event", "Parse event with 2 words and ENTER");
+}
   {
     istringstream is("   sport event ");
     AssertEqual(ParseEvent(is), "sport event ", "Parse event with leading spaces");

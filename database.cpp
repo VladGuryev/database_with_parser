@@ -23,12 +23,10 @@ void Database::Add(const Date &date, const string &new_event)
             key_as_list.push_back(new_event);
             this->dataBaseStorage[date] = key_as_list;
         }
-        //cout << date << endl;
     } else {
         list<string> event;
         event.push_back(new_event);
         this->dataBaseStorage[date] = event;
-       // cout << date << endl;
     }
 }
 
@@ -38,19 +36,50 @@ void Database::Print(ostream& outStream) const{
     outStream << "----------" << "END" << "----------" <<  endl;
 }
 
+int Database::RemoveIf(function<bool (const Date &, const string &)> predicat){
+    int kol = 0;
+    map<Date, list<string>>::iterator  current = dataBaseStorage.begin();
+    map<Date, list<string>>::iterator  end = dataBaseStorage.end();
+
+    while(current != end){
+        eventsOnDate::iterator it = stable_partition(current->second.begin(), current->second.end(),
+                [current, predicat](const string p){return predicat(current->first, p);});
+        kol += distance(current->second.begin(), it);
+        current->second.erase(current->second.begin(),it);
+        current++;
+    }
+
+    return kol;
+}
+
+vector<string>
+Database::FindIf(function<bool (const Date &, const string &)> predicat)
+{
+    vector<string> entries;
+
+    for (const pair<Date, eventsOnDate>& item : dataBaseStorage) {
+        for (const string& event : item.second) {
+            if (predicat(item.first, event)){
+                string entry = item.first.toString() + " " + event;
+                entries.push_back(entry);
+            }
+        }
+    }
+    return entries;
+}
+
 string Database::Last(const Date &date)
 {
+    map<Date, list<string>>::iterator events =
+            this->dataBaseStorage.lower_bound(date);
 
-     map<Date, list<string>>::iterator events =
-             this->dataBaseStorage.lower_bound(date);
+    if(date < begin(dataBaseStorage)->first){
+        return "No entries";
+    }
 
-     if(date < begin(dataBaseStorage)->first){
-         return "No entries";
-     }
-
-     if((date == events->first) || (events == begin(dataBaseStorage))){
+    if((date == events->first) || (events == begin(dataBaseStorage))){
         return string(events->first) + " " + events->second.back();
-     }
+    }
      else {
         return string(prev(events)->first) + " " + prev(events)->second.back();
      }
