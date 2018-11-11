@@ -46,6 +46,8 @@ int Database::RemoveIf(function<bool (const Date &, const string &)> predicat){
                 [current, predicat](const string p){return predicat(current->first, p);});
         kol += distance(current->second.begin(), it);
         current->second.erase(current->second.begin(),it);
+        if(current->second.size() == 0)
+            dataBaseStorage.erase(current->first);
         current++;
     }
 
